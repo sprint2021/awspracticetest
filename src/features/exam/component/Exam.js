@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { Button, Card, Alert } from 'react-bootstrap'
 
-import {Question} from '../../question';
-import {questionsAttempted, setAnswerKey, setResult} from '../../exam';
+import { Question } from '../../question';
+import { questionsAttempted, setAnswerKey, setResult } from '../../exam';
 
 
 
@@ -17,12 +17,12 @@ function Exam() {
   const activeCert = state.certificate.active;
 
 
-  const {exam} = state;
+  const { exam } = state;
 
   //let testLoaded = state.certificate. ? activeCertificate.href : ''
-  
 
- // console.log(state.certificate.active);
+
+  // console.log(state.certificate.active);
   /**
    * Register the option selected by the user against the question.
    *
@@ -33,7 +33,7 @@ function Exam() {
    *   The option selected by the user.
    */
   const markChoice = (number, choice) => {
-    
+
     dispatch(setAnswerKey({
       number, choice
     }));
@@ -63,41 +63,39 @@ function Exam() {
    *   List of all questions.
    */
   const checkResult = (questions) => {
-    let correct = 0, incorrect = 0;
-    const {answerKey} = exam;
-    dispatch(setResult({incorrect: incorrect, correct: correct}));
-    Object.keys(answerKey).forEach((qNum) => {
-      if (questions[qNum-1].answer === answerKey[qNum]) {
-        correct = correct + 1;
+    let correct = 0;
+    let incorrect = 0;
+    const { answerKey } = exam;
 
+    Object.keys(answerKey).forEach((qNum) => {
+      const answers = questions[qNum - 1].answer;
+      const ac1 = Object.values(answers).some(answer => answer === answerKey[qNum]);
+
+      if (ac1) {
+        correct++;
       } else {
-        incorrect = incorrect + 1;
+        incorrect++;
       }
     });
-    dispatch(setResult({incorrect: incorrect, correct: correct}));
+
+    dispatch(setResult({ incorrect, correct }));
   }
   let questions = []
 
-  if(exam.start){
+  if (exam.start) {
     questions = activeCert.jsonData;
   }
 
- // if (activeCert.file.trim() !== "") {
-    //questions = require('../../../data/' + activeCert.file);
-//   console.log(questions);
- // }
-
- 
 
   return (
     <div className="mt-5">
       {userWarning ? (
-      <Alert variant={'danger'}>
-        Please select an option from below to proceed.
-      </Alert>) : (<React.Fragment />)
+        <Alert variant={'danger'}>
+          Please select an option from below to proceed.
+        </Alert>) : (<React.Fragment />)
       }
       <Card className="exam">
-        <Question 
+        <Question
           markChoice={markChoice}
           question={questions[exam.current - 1]}
           answerKey={exam.answerKey}
@@ -109,7 +107,7 @@ function Exam() {
           <Button className="mb-1 mb-sm-1" onClick={e => toggleQuestions('next')} variant="primary">
             Next
           </Button>{' '}
-          {exam.answered >= exam.total? 
+          {exam.answered >= exam.total ?
             <Button className="mb-1 mb-sm-1" onClick={e => checkResult(questions)} variant="secondary">
               Result
             </Button> : <React.Fragment />}
@@ -119,4 +117,4 @@ function Exam() {
   );
 }
 
-export {Exam};
+export { Exam };
