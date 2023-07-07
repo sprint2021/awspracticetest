@@ -1,5 +1,4 @@
 import React from 'react';
-import RadioButtons from './RadioButtons';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import { FaTimesCircle } from 'react-icons/fa';
@@ -8,37 +7,24 @@ function Question(props) {
   const question = props.question;
   const answerKey = props.answerKey;
   const choices = question.choices;
+  const answers = question.answer;
   const userSelectedChoice = answerKey[question.number] !== undefined
     ? answerKey[question.number] : -1;
 
-
-
   const renderIcon = (choice) => {
-    if (question.answer !== choice) {
-      return <FaTimesCircle className="radio-icon" />;
-    }
-    return null;
+    const x2 = Object.values(answers).includes(choice) ? null : <FaTimesCircle className="radio-icon" />;
+    return x2;
   };
 
   const renderText = (choice) => {
-    if (question.answer !== choice) {
-      return { color: selectedOption === choice ? 'red' : 'black' }
-    }
-    return null;
+    return { color: selectedOption === choice ? 'black' : 'red' }
   }
 
   const [selectedOption, setSelectedOption] = useState(false);
-
   const handleOptionChange = (event, number, choice) => {
-
     props.markChoice(number, choice);
-
-
-    if (question.answer !== choice) {
-      setSelectedOption(event.target.value);
-    } else {
-      setSelectedOption(null);
-    }
+    setSelectedOption(null);
+    const x2 = Object.values(answers).includes(choice) ? setSelectedOption(event.target.value) : null;
   };
 
   if (question) {
@@ -62,6 +48,7 @@ function Question(props) {
                 onChange={(e) => handleOptionChange(e, question.number, choice)}
                 label={<span>
                   {choices[choice]}
+                  
                   {choice === userSelectedChoice ?
                     renderIcon(choice) : null}
                 </span>}
