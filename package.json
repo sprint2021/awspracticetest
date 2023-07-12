@@ -1,5 +1,5 @@
 {
-  "homepage": "https://sprint2021.github.io/awspracticetest/",
+  "homepage": "https://sprint2021.github.io/awspracticetest",
   "name": "aws-practice-questions",
   "version": "0.1.0",
   "private": true,
@@ -45,6 +45,6 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^5.0.0"
   }
 }
