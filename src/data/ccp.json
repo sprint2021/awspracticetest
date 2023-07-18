@@ -5642,7 +5642,7 @@
     ]
   },
   {
-    "q": "Which AWS feature will reduce the customerâ€™s total cost of ownership (TCO)?",
+    "q": "Which AWS feature will reduce the customers total cost of ownership (TCO)?",
     "choices": {
       "a": "Shared responsibility security model.",
       "b": "Single tenancy.",
@@ -5651,7 +5651,7 @@
     },
     "number": 418,
     "answer": [
-      "a"
+      "c"
     ]
   },
   {
